@@ -4,13 +4,19 @@ This repo is the official implementation of CFP (Coarse-to-Fine Policy) of ***[M
 
 
 
-You can easily install the environment by:
+* You can easily install the environment by:
 
-```python
+```shell
 pip install -r requirements.txt
 ```
 
 
+
+* You can also install morphmaze benchmark by:
+
+```shell
+pip install .
+```
 
 Please check the official implementation of [Morphological Maze](https://github.com/suninghuang19/morphmaze) to learn more about the benchmark.
 
