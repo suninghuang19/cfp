@@ -40,7 +40,7 @@ python train.py --env_name task_Fine-v0 --residual True --coarse_model_path /pat
 python test.py --env_name task_Fine-v0 --residual True --coarse_model_path /path/to/your/coarse/model.pth --fine_model_path /path/to/your/fine/model.pth --config_file_path  ./models/taskname/fine.json
 ```
 
-You can also test your coarse model by set 
+You can also test your coarse model by set :
 
 ```shell
 --residual False
