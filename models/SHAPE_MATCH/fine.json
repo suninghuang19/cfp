@@ -1,0 +1,57 @@
+{
+    "action_dim": 8192,
+    "action_res_resize": 1,
+    "alpha": 0.0,
+    "automatic_entropy_tuning": false,
+    "batch_size": 256,
+    "coarse2fine_bias": -2,
+    "coarse2fine_penalty": 0.8,
+    "coarse_action_res": 32,
+    "coarse_model_path": null,
+    "cuda": true,
+    "cuda_deterministic": false,
+    "env_name": "SHAPE_MATCH_Fine-v0",
+    "gamma": 0.99,
+    "gravity": [
+        0,
+        0
+    ],
+    "hidden_size": 256,
+    "lambda_0": 1000,
+    "lr": 0.0003,
+    "mass": [
+        2
+    ],
+    "max_actuation": 82,
+    "max_episode_steps": 10000,
+    "max_num_steps": 5000000,
+    "momentum": 0.99,
+    "mu_0": 10000,
+    "n_grid": 128,
+    "obs_res": 64,
+    "obs_res_resize": 8,
+    "offset": [
+        0.4,
+        0.5
+    ],
+    "particle_num_list": [
+        16000
+    ],
+    "repeat_times": 100,
+    "replay_size": 200000,
+    "residual": true,
+    "reward_params": [
+        23
+    ],
+    "save_model": true,
+    "seed": 0,
+    "start_steps": 100,
+    "target": "STAR",
+    "target_update_interval": 1,
+    "tau": 0.005,
+    "updates_per_step": 1,
+    "visualize": true,
+    "visualize_interval": 10000,
+    "wandb": true,
+    "yield_stress": 62
+}
