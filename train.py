@@ -87,15 +87,19 @@ else:
 
 current_file_path = os.path.abspath(__file__)
 current_directory = os.path.dirname(current_file_path)
+args = utils.load_from_json(args, "./morphmaze/cfg/" + args.env_name.split("_")[0].lower() + ".json")
+visualize_interval = args.visualize_interval
+coarse_model_path = args.coarse_model_path 
+if args.config_file_path is not None:
+    args = utils.load_from_json(args, args.config_file_path)
+args.visualize_interval = visualize_interval
+args.coarse_model_path = coarse_model_path
 if not os.path.exists("./results"):
     os.makedirs("./results")
 file_path = os.path.join(current_directory, "./results/" + args.name)
-args = utils.load_from_json(args, "./morphmaze/cfg/" + args.env_name.split("_")[0].lower() + ".json")
-if args.config_file_path is not None:
-    args = utils.load_from_json(args, args.config_file_path)
+args.save_file_name = file_path
 if not os.path.exists(file_path):
     os.makedirs(file_path)
-args.save_file_name = file_path
 json.dump(args.__dict__, open(file_path + "/config.json", 'w'), indent=4)
 if args.save_model and not os.path.exists(file_path + "/models"):
     os.makedirs(file_path + "/models")
@@ -242,7 +246,7 @@ for i_episode in itertools.count(1):
         memory.push(state, final_action, reward, next_state, mask) # Append transition to memory
         state = next_state
             
-        if total_numsteps % 1000 == 0:
+        if total_numsteps % 200 == 0:
             if args.save_model:
                 agent.save_model(filename=file_path + "/models/" + str(total_numsteps))
 

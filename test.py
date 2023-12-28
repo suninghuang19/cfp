@@ -20,17 +20,17 @@ import morphmaze
 parser = argparse.ArgumentParser(description='MorphMaze Project')
 parser.add_argument('--env_name', default="DIG_Fine-v0",
                     help='name of the environment to run')
-parser.add_argument('--coarse_model_path', type=str, default=None, metavar='G',
+parser.add_argument('--coarse_model_path', type=str, default="/home/hsn/run_test/models/DIG/DIG_Coarse.pth", metavar='G',
                     help='path of the coarse model')
 parser.add_argument("--residual", type=bool, default=True,
                     help="if training residual policy (default: False)")
-parser.add_argument('--residual_model_path', type=str, default=None, metavar='G',
+parser.add_argument('--residual_model_path', type=str, default="/home/hsn/run_test/models/DIG/DIG_Fine.pth", metavar='G',
                     help='path of the residual model')
 parser.add_argument("--coarse_action_res", type=int, default=8,
                     help="coarse action resolution")
 parser.add_argument("--residual_action_res", type=int, default=16,
                     help="coarse action resolution")
-parser.add_argument('--config_file_path', type=str, default=None, metavar='G',
+parser.add_argument('--config_file_path', type=str, default="/home/hsn/run_test/models/DIG/fine.json", metavar='G',
                     help='path of the config file')
 parser.add_argument('--start_steps', type=int, default=0, metavar='N',
                     help='steps sampling random actions (default: 6000)')
@@ -53,7 +53,8 @@ current_file_path = os.path.abspath(__file__)
 current_directory = os.path.dirname(current_file_path)
 visualize_interval = args.visualize_interval
 coarse_model_path = args.coarse_model_path
-args = utils.load_from_json(args, args.config_file_path)
+if args.config_file_path is not None:
+    args = utils.load_from_json(args, args.config_file_path)
 args.visualize_interval = visualize_interval
 args.coarse_model_path = coarse_model_path
 if not os.path.exists("./results"):
