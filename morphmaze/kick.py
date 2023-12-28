@@ -56,7 +56,7 @@ class KICK(morphmaze):
             self.anchor[None] = [np.mean(x_numpy[:self.robot_particles_num, 0]) - 0.3, 0.0]
         else:
             self.anchor[None] = [self.prev_location[0] - 0.3, 0.0]
-        self.robot_center_point = [np.mean(x_numpy[:self.robot_particles_num, 0]), np.mean(x_numpy[:self.robot_particles_num, 1])]
+        self.center_point = [np.mean(x_numpy[:self.robot_particles_num, 0]), np.mean(x_numpy[:self.robot_particles_num, 1])]
         self.object_center_point = [np.mean(x_numpy[self.robot_particles_num:, 0]), np.mean(x_numpy[self.robot_particles_num:, 1])]
         self.set_obs_field()
         self.update_obs(fix_y=OBS_ACT_CENTER_Y)
@@ -65,10 +65,10 @@ class KICK(morphmaze):
         # cv2.imwrite("./observation/state.png", self.state[0])
         # cv2.imwrite("./observation/vx.png", self.state[1])
         # cv2.imwrite("./observation/vy.png", self.state[2])
-        if not np.isnan(self.robot_center_point).any():
-            self.prev_location = self.robot_center_point
+        if not np.isnan(self.center_point).any():
+            self.prev_location = self.center_point
         else:
-            self.robot_center_point = self.prev_location
+            self.center_point = self.prev_location
 
         if not np.isnan(self.object_center_point).any():
             self.prev_object_location = self.object_center_point
@@ -77,7 +77,7 @@ class KICK(morphmaze):
         terminated = False
         # # location
         location_reward = 0
-        robot_x_mean = self.robot_center_point[0]
+        robot_x_mean = self.center_point[0]
         ball_x_mean = self.object_center_point[0]
         ball_location_reward = np.clip(np.sign(ball_x_mean - self.init_object_location[0]) * (2 * (ball_x_mean - self.init_object_location[0]))**2\
             + 4 * (ball_x_mean - self.init_object_location[0]), a_min=-20, a_max=30)
@@ -145,11 +145,11 @@ class KICK(morphmaze):
                         radius=1.5,
                         palette=[0xFF5722, 0x7F3CFF],
                         palette_indices=self.material)
-            if not os.path.exists(self.save_file_name + "/record_" + str(self.record_id)):
-                os.makedirs(self.save_file_name + "/record_" + str(self.record_id))
+            if not os.path.exists(self.save_file_name + "/videos/record_" + str(self.record_id)):
+                os.makedirs(self.save_file_name + "/videos/record_" + str(self.record_id))
             self.gui.show(
                 os.path.join(self.save_file_name 
-                             + "/record_" + str(self.record_id)
+                             + "/videos/record_" + str(self.record_id)
                              + "/frame_%04d.png" % self.frames_num))
             self.frames_num += 1
             
