@@ -138,11 +138,11 @@ class OBSTACLE(morphmaze):
                 radius=1.5,
                 color=0xFF5722,
             )
-            if not os.path.exists(self.save_file_name + "/record_" + str(self.record_id)):
-                os.makedirs(self.save_file_name + "/record_" + str(self.record_id))
+            if not os.path.exists(self.save_file_name + "/videos/record_" + str(self.record_id)):
+                os.makedirs(self.save_file_name + "/videos/record_" + str(self.record_id))
             self.gui.show(
                 os.path.join(self.save_file_name 
-                             + "/record_" + str(self.record_id)
+                             + "/videos/record_" + str(self.record_id)
                              + "/frame_%04d.png" % self.frames_num))
             self.frames_num += 1
 

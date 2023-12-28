@@ -426,6 +426,6 @@ class morphmaze(gym.Env, ABC):
     def render(self, gui, log=False, record_id=None):
         pass
 
-    @abstractmethod
-    def grid_operation(self):
-        pass
+    # @abstractmethod
+    # def grid_operation(self):
+    #     pass

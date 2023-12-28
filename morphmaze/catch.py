@@ -193,11 +193,11 @@ class CATCH(morphmaze):
 
             if 1e-5 < self.target[None][0] - self.anchor[None][0] < 1 - 1e-5 and 1e-5 < self.target[None][1] - self.anchor[None][1] < 1 - 1e-5:
                 self.gui.circle([self.target[None][0] - self.anchor[None][0], self.target[None][1] - self.anchor[None][1]], radius=5, color=0x7F3CFF)
-            if not os.path.exists(self.save_file_name + "/record_" + str(self.record_id)):
-                os.makedirs(self.save_file_name + "/record_" + str(self.record_id))
+            if not os.path.exists(self.save_file_name + "/videos/record_" + str(self.record_id)):
+                os.makedirs(self.save_file_name + "/videos/record_" + str(self.record_id))
             self.gui.show(
                 os.path.join(self.save_file_name 
-                             + "/record_" + str(self.record_id)
+                             + "/videos/record_" + str(self.record_id)
                              + "/frame_%04d.png" % self.frames_num))
             self.frames_num += 1
 

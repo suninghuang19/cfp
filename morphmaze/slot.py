@@ -174,11 +174,11 @@ class SLOT(morphmaze):
             while GAP_1 / 128 + 0.003 - 0.001 * i >= 20 / 128:
                 self.gui.line(begin=(max(0, 81 / 128 - self.anchor[None][0]), GAP_1 / 128 + 0.003 - 0.001 * i), end=(min(1, 84.5 / 128 - self.anchor[None][0]), GAP_1 / 128 + 0.003 - 0.001 * i), radius=1.2, color=0x394C31)
                 i += 1  
-            if not os.path.exists(self.save_file_name + "/record_" + str(self.record_id)):
-                os.makedirs(self.save_file_name + "/record_" + str(self.record_id))
+            if not os.path.exists(self.save_file_name + "/videos/record_" + str(self.record_id)):
+                os.makedirs(self.save_file_name + "/videos/record_" + str(self.record_id))
             self.gui.show(
                 os.path.join(self.save_file_name 
-                             + "/record_" + str(self.record_id)
+                             + "/videos/record_" + str(self.record_id)
                              + "/frame_%04d.png" % self.frames_num))
             self.frames_num += 1
 
