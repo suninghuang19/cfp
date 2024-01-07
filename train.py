@@ -18,7 +18,7 @@ from replay_memory import ReplayMemory
 import morphmaze
 
 parser = argparse.ArgumentParser(description='MorphMaze Project')
-parser.add_argument('--env_name', default="SHAPE_MATCH_Coarse-v0",
+parser.add_argument('--env_name', default="shapematch-coarse-v0",
                     help='name of the environment to run')
 parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
                     help='discount factor for reward (default: 0.99)')
@@ -61,8 +61,10 @@ parser.add_argument('--wandb', type=bool, default=True,
                     help='if use wandb (default: True)')
 parser.add_argument('--visualize', type=bool, default=True,
                     help='if save visualization results (default: True)')
-parser.add_argument('--visualize_interval', type=int, default=10000,
-                    help='visualization interval (default: 10000)')
+parser.add_argument('--gui', type=bool, default=False, metavar='G',
+                    help='if use gui (default: False)')
+parser.add_argument('--visualize_interval', type=int, default=10,
+                    help='visualization interval (default: 10)')
 parser.add_argument("--save_model", type=bool, default=True,
                     help="if save trained model (default: True)")
 parser.add_argument("--residual", type=bool, default=False,
@@ -79,49 +81,35 @@ parser.add_argument('--config_file_path', type=str, default=None, metavar='G',
                     help='path of the config file')
 args = parser.parse_args()
 
+# save file path
 if args.residual: 
     args.start_steps = 100
     args.name = "residual_" + args.env_name + "_" + datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 else:
     args.name = args.env_name + "_" + datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-
 current_file_path = os.path.abspath(__file__)
 current_directory = os.path.dirname(current_file_path)
-args = utils.load_from_json(args, "./morphmaze/cfg/" + args.env_name.split("_")[0].lower() + ".json")
-visualize_interval = args.visualize_interval
-coarse_model_path = args.coarse_model_path 
+args = utils.load_from_json(args, "./morphmaze/cfg/" +\
+    args.env_name.split("-")[0] + "-" + args.env_name.split("-")[1] + ".json")
 if args.config_file_path is not None:
     args = utils.load_from_json(args, args.config_file_path)
-args.visualize_interval = visualize_interval
-args.coarse_model_path = coarse_model_path
 if not os.path.exists("./results"):
     os.makedirs("./results")
 file_path = os.path.join(current_directory, "./results/" + args.name)
 args.save_file_name = file_path
+upsampled_action_res = args.action_res * args.action_res_resize
 if not os.path.exists(file_path):
     os.makedirs(file_path)
-json.dump(args.__dict__, open(file_path + "/config.json", 'w'), indent=4)
 if args.save_model and not os.path.exists(file_path + "/models"):
     os.makedirs(file_path + "/models")
+json.dump(args.__dict__, open(file_path + "/config.json", 'w'), indent=4)
 
-if "Coarse" in args.env_name:
-    if "SHAPE_MATCH" in args.env_name:
-        args.action_res = 32
-    else:
-        args.action_res = 8
-elif "Fine" in args.env_name:
-    if "SHAPE_MATCH" in args.env_name:
-        args.action_res = 64
-    else:
-        args.action_res = 16
-upsampled_action_res = args.action_res * args.action_res_resize
-        
 # Taichi
 ti.init(arch=ti.gpu, random_seed=args.seed)
 
 # GUI
 if args.visualize:
-    gui = ti.GUI("Morphological Maze", res=512, background_color=0x112F41, show_gui=False)
+    gui = ti.GUI("Morphological Maze", res=512, show_gui=args.gui)
 
 # Wandb
 if args.wandb:
@@ -170,19 +158,28 @@ memory = ReplayMemory(args.replay_size, args.seed, args.batch_size)
 # Training & Evaluation Loop
 total_numsteps = 0
 updates = 0
-last_record = 0
+visualize_gap = 0
 for i_episode in itertools.count(1):
     episode_steps = 0
     episode_reward = 0
     episode_normalize_reward = 0
     done = False
     state = env.reset()
-    env.render(gui, log=False)
-    generate_video = None
-    if args.visualize and total_numsteps >= args.start_steps and total_numsteps - last_record >= args.visualize_interval:
-        env.render(gui, log=True, record_id=total_numsteps)
-        last_record = total_numsteps
+    env.render(gui, record=False)
+    if args.visualize and total_numsteps >= args.start_steps\
+        and visualize_gap == args.visualize_interval:
+        env.render(gui, record=True, record_id=total_numsteps)
         generate_video = total_numsteps
+        visualize_gap = 0
+        render = True
+    else:
+        generate_video = None
+        render = False
+        if not total_numsteps >= args.start_steps:
+            visualize_gap = 0
+        else:
+            visualize_gap += 1
+
     # training loop
     while not done:
         if args.start_steps > total_numsteps:
@@ -200,7 +197,7 @@ for i_episode in itertools.count(1):
                 final_action, _ = agent.select_action(state)
 
             # log action image (only log x direction)
-            if args.wandb and total_numsteps % 1000 == 0:
+            if args.wandb and total_numsteps % 200 == 0:
                 final_action_ = ((final_action.reshape(2, args.action_res, args.action_res)[0] + 1) / 2 * 255)
                 final_action_ = np.clip(cv2.resize(final_action_, (upsampled_action_res, upsampled_action_res),\
                     interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
@@ -236,6 +233,9 @@ for i_episode in itertools.count(1):
                 updates += 1
                 
         next_state, reward, terminated, truncated, _ = env.step(final_action)
+        # render
+        if args.visualize and render:
+            env.render(gui, record=True)
         done = truncated or terminated
         episode_steps += 1
         total_numsteps += 1
@@ -246,7 +246,7 @@ for i_episode in itertools.count(1):
         memory.push(state, final_action, reward, next_state, mask) # Append transition to memory
         state = next_state
             
-        if total_numsteps % 200 == 0:
+        if total_numsteps % 1000 == 0:
             if args.save_model:
                 agent.save_model(filename=file_path + "/models/" + str(total_numsteps))
 

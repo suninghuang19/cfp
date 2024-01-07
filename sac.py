@@ -45,25 +45,35 @@ class SAC(object):
             self.log_alpha = torch.zeros(1, requires_grad=True, device=self.device)
             self.alpha_optim = Adam([self.log_alpha], lr=args.lr)
         
-    def select_action(self, state, coarse_action=None):
+    def select_action(self, state, coarse_action=None, task=None):
         state = (torch.FloatTensor(state) / 255.0 * 2.0 - 1.0).to(self.device).unsqueeze(0)
         if coarse_action is not None:
             coarse_action = torch.FloatTensor(coarse_action).to(self.device).unsqueeze(0)
-        action, _, _, _, mask = self.policy.sample(state, coarse_action)
+        if task is None or "shapematch" not in task:
+            action, _, _, _, mask = self.policy.sample(state, coarse_action)
+        else:
+            _, _, action, _, mask = self.policy.sample(state, coarse_action)
+            action = torch.tanh(action)
         action = action.detach().cpu().numpy()[0]
         if coarse_action is not None:
             mask = mask.detach().cpu().numpy()[0]
         return action, mask
 
-    def select_coarse_action(self, state, coarse_action=None):
+    def select_coarse_action(self, state, coarse_action=None, task=None):
         state = (torch.FloatTensor(state) / 255.0 * 2.0 - 1.0).to(self.device).unsqueeze(0)
         if coarse_action is not None:
             coarse_action = torch.FloatTensor(coarse_action).to(self.device).unsqueeze(0)
-        action, _, mean, std, _ = self.coarse_policy.sample(state, coarse_action)
-        action = action.detach().cpu().numpy()[0]
-        mean = mean.detach().cpu().numpy()[0]
-        std = std.detach().cpu().numpy()[0]
-        return action, mean, std
+        if task is None or "shapematch" not in task:
+            action, _, mean, std, _ = self.coarse_policy.sample(state, coarse_action)
+            action = action.detach().cpu().numpy()[0]
+            mean = mean.detach().cpu().numpy()[0]
+            std = std.detach().cpu().numpy()[0]
+            return action, mean, std
+        else:
+            _, _, action, _, _ = self.coarse_policy.sample(state, coarse_action)
+            action = torch.tanh(action)
+            action = action.detach().cpu().numpy()[0]
+            return action, None, None
 
     def reward_normalization(self, rewards):
         # update mean and var for reward normalization
@@ -121,9 +131,9 @@ class SAC(object):
         # actor
         if self.args.residual:
             with torch.no_grad():
-                original_action = self.upsample_coarse_action(state_batch)
-            pi, log_pi, _, std, mask = self.policy.sample(state_batch, original_action)
-            pi = mask * pi + (1 - mask) * original_action.reshape(self.args.batch_size, -1)
+                coarse_action = self.upsample_coarse_action(state_batch)
+            pi, log_pi, _, std, mask = self.policy.sample(state_batch, coarse_action)
+            pi = mask * pi + (1 - mask) * coarse_action.reshape(self.args.batch_size, -1)
         else:
             pi, log_pi, _, std, _ = self.policy.sample(state_batch)
         qf1_pi, qf2_pi = self.critic(state_batch, pi)

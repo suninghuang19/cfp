@@ -1,5 +1,5 @@
 {
-    "action_dim": 512,
+    "action_res": 16,
     "action_res_resize": 2,
     "alpha": 0.05,
     "automatic_entropy_tuning": false,
@@ -10,7 +10,7 @@
     "coarse_model_path": null,
     "cuda": true,
     "cuda_deterministic": false,
-    "env_name": "DIG_Fine-v0",
+    "env_name": "dig-fine-v0",
     "gamma": 0.99,
     "gravity": [
         0,

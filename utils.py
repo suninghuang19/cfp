@@ -55,7 +55,7 @@ def load_from_json(args, json_path):
 def generate_video(file_path, generate_video=None):
     if generate_video is None:
         return
-    file_path += "/record_" + str(generate_video)
+    file_path += "/videos/record_" + str(generate_video)
     file_list = os.listdir(file_path)
     file_list.sort()
     fps = 10

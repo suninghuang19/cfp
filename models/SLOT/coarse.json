@@ -1,5 +1,5 @@
 {
-    "action_dim": 128,
+    "action_res": 8,
     "action_res_resize": 8,
     "alpha": 0.05,
     "automatic_entropy_tuning": false,
@@ -7,10 +7,9 @@
     "coarse2fine_bias": -2,
     "coarse2fine_penalty": 0.1,
     "coarse_action_res": 8,
-    "coarse_model_path": null,
     "cuda": true,
     "cuda_deterministic": false,
-    "env_name": "SLOT_Coarse-v0",
+    "env_name": "slot-coarse-v0",
     "gamma": 0.99,
     "gravity": [
         0,
@@ -55,8 +54,5 @@
     "target_update_interval": 1,
     "tau": 0.005,
     "updates_per_step": 1,
-    "visualize": true,
-    "visualize_interval": 10000,
-    "wandb": true,
     "yield_stress": 90
 }
