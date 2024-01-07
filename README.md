@@ -6,6 +6,7 @@
 <sup>1</sup>Tsinghua <sup>2</sup>MIT </br>
 
 <center>
+
 ![](./teaser/M.gif)![](./teaser/I.gif)![](./teaser/T.gif)
 </center>
 
