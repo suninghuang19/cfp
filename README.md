@@ -17,7 +17,7 @@ This repo is the official algorithm implementation of ***[Morphological Maze: Co
 }
 ```
 
-For questions about code, please create an issue on github. For questions about paper, please reach me at hsn19@mails.tsiinghua.edu.cn
+For questions about code, please create an issue on github. For questions about paper, please reach me at hsn19@mails.tsinghua.edu.cn
 
 # setup conda environment
 
