@@ -38,7 +38,7 @@ Please check the official implementation of [Morphological Maze](https://github.
 #### To train the coarse policy, simply use command:
 
 ```shell
-python train.py --env_name envname-coarse-v0 --config_file_path  ./models/taskname/coarse.json
+python train.py --env_name envname-coarse-v0 --config_file_path  ./models/envname/coarse.json
 ```
 
 You can also sepcify to your own config file path.
@@ -46,19 +46,19 @@ You can also sepcify to your own config file path.
 #### To train the coarse-to-fine policy, simply use command:
 
 ```shell
-python train.py --env_name envname-fine-v0 --residual True --coarse_model_path /path/to/your/coarse/model.pth --config_file_path  ./models/taskname/fine.json
+python train.py --env_name envname-fine-v0 --residual True --coarse_model_path /path/to/your/coarse/model.pth --config_file_path  ./models/envname/fine.json
 ```
 
 #### To run the ckpts, simply use command:
 
 ```shell
-python test.py --env_name envname-fine-v0 --residual True --coarse_model_path /path/to/your/coarse/model.pth --fine_model_path /path/to/your/fine/model.pth --config_file_path  ./models/taskname/fine.json
+python test.py --env_name envname-fine-v0 --residual True --coarse_model_path /path/to/your/coarse/model.pth --fine_model_path /path/to/your/fine/model.pth --config_file_path  ./models/envname/fine.json
 ```
 
 #### You can also test your coarse model by set :
 
 ```shell
-python test.py --env_name envname-coarse-v0 --residual False --coarse_model_path /path/to/your/coarse/model.pth --config_file_path  ./models/taskname/coarse.json
+python test.py --env_name envname-coarse-v0 --residual False --coarse_model_path /path/to/your/coarse/model.pth --config_file_path  ./models/envname/coarse.json
 ```
 
 #### If you want to visualize the result, simply set (this is the default setting):
