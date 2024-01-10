@@ -5,9 +5,12 @@
 [Suning Huang<sup>1</sup>](https://suninghuang19.github.io/), [Boyuan Chen<sup>2</sup>](https://boyuan.space/), [Huazhe Xu<sup>1</sup>](http://hxu.rocks//), [Vincent Sitzmann<sup>2</sup>](https://www.vincentsitzmann.com/) <br/>
 <sup>1</sup>Tsinghua <sup>2</sup>MIT </br>
 
-<center>
-![](./teaser/M.gif)![](./teaser/I.gif)![](./teaser/T.gif)
-</center>
+<p align="center">
+  <img src="./teaser/M.gif" alt="M" style="display: inline-block;" />
+  <img src="./teaser/I.gif" alt="I" style="display: inline-block;" />
+  <img src="./teaser/T.gif" alt="T" style="display: inline-block;" />
+</p>
+
 
 This repo is the official algorithm implementation of ***[Morphological Maze: Control Reconfigurable Soft Robots with Fine-grained Morphology Change](https://morphologicalmaze.github.io/)***. We set up a fully-convolutional policy framework with **coarse-to-fine curriculum** to efficiently train control policies for highly reconfigurable robots to support locomotion and fine-grained morphology changes. You can also check the implementation of the benchmark **MorphMaze** in ***[here](https://github.com/suninghuang19/morphmaze)***.
 
