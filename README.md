@@ -6,11 +6,12 @@
 <sup>1</sup>Tsinghua <sup>2</sup>MIT </br>
 
 <center>
-
 ![](./teaser/M.gif)![](./teaser/I.gif)![](./teaser/T.gif)
 </center>
 
-This repo is the official algorithm implementation of ***[Morphological Maze: Control Reconfigurable Soft Robots with Fine-grained Morphology Change](https://morphologicalmaze.github.io/)***. We set up a fully-convolutional policy framework with **coarse-to-fine curriculum** to efficiently train control policies for highly reconfigurable robots to support locomotion and fine-grained morphology changes. If you find this work helpful to your research, please cite us as:
+This repo is the official algorithm implementation of ***[Morphological Maze: Control Reconfigurable Soft Robots with Fine-grained Morphology Change](https://morphologicalmaze.github.io/)***. We set up a fully-convolutional policy framework with **coarse-to-fine curriculum** to efficiently train control policies for highly reconfigurable robots to support locomotion and fine-grained morphology changes. You can also check the implementation of the benchmark **MorphMaze** in ***[here](https://github.com/suninghuang19/morphmaze)***.
+
+If you find this work helpful to your research, please cite us as:
 
 ```
 @inproceedings{
