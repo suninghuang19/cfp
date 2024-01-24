@@ -15,9 +15,9 @@ from torch.nn import Upsample
 torch.set_num_threads(16)
 from sac import SAC
 from replay_memory import ReplayMemory
-import morphmaze
+import dittogym
 
-parser = argparse.ArgumentParser(description='MorphMaze Project')
+parser = argparse.ArgumentParser(description='DittoGym Project')
 parser.add_argument('--env_name', default="shapematch-coarse-v0",
                     help='name of the environment to run')
 parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
@@ -89,7 +89,7 @@ else:
     args.name = args.env_name + "_" + datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 current_file_path = os.path.abspath(__file__)
 current_directory = os.path.dirname(current_file_path)
-args = utils.load_from_json(args, "./morphmaze/cfg/" +\
+args = utils.load_from_json(args, "./dittogym/cfg/" +\
     args.env_name.split("-")[0] + "-" + args.env_name.split("-")[1] + ".json")
 if args.config_file_path is not None:
     args = utils.load_from_json(args, args.config_file_path)
@@ -109,7 +109,7 @@ ti.init(arch=ti.gpu, random_seed=args.seed)
 
 # GUI
 if args.visualize:
-    gui = ti.GUI("Morphological Maze", res=512, show_gui=args.gui)
+    gui = ti.GUI("Dittogym", res=512, show_gui=args.gui)
 
 # Wandb
 if args.wandb:

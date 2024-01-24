@@ -1,6 +1,6 @@
 # cfp
 
-#### [[Project Website]](https://morphologicalmaze.github.io/) [[Paper]](./paper/Morphological_Maze_Control_Reconfigurable_Soft_Robots_with_Fine_grained_Morphology_Change.pdf)
+#### [[Project Website]](https://dittogym.github.io/) [[Paper]](./paper/Ditto_Learning_to_Control_Soft_Shape_Shifting_Robots.pdf)
 
 [Suning Huang<sup>1</sup>](https://suninghuang19.github.io/), [Boyuan Chen<sup>2</sup>](https://boyuan.space/), [Huazhe Xu<sup>1</sup>](http://hxu.rocks//), [Vincent Sitzmann<sup>2</sup>](https://www.vincentsitzmann.com/) <br/>
 <sup>1</sup>Tsinghua <sup>2</sup>MIT </br>
@@ -12,7 +12,7 @@
 </p>
 
 
-This repo is the official algorithm implementation of ***[Morphological Maze: Control Reconfigurable Soft Robots with Fine-grained Morphology Change](https://morphologicalmaze.github.io/)***. We set up a fully-convolutional policy framework with **coarse-to-fine curriculum** to efficiently train control policies for highly reconfigurable robots to support locomotion and fine-grained morphology changes. You can also check the implementation of the benchmark **MorphMaze** in ***[here](https://github.com/suninghuang19/morphmaze)***.
+This repo is the official algorithm implementation of ***[DittoGym: Learning to Control Soft Shape-Shifting Robots](https://dittogym.github.io/)***. We set up a fully-convolutional policy framework with **coarse-to-fine curriculum** to efficiently train control policies for highly reconfigurable robots to support locomotion and fine-grained morphology changes. You can also check the implementation of the benchmark **DittoGym** in ***[here](https://github.com/suninghuang19/dittogym)***.
 
 If you find this work helpful to your research, please cite us as:
 
@@ -28,14 +28,14 @@ For questions about code, please create an issue on github. For questions about 
 #### You can easily install the environment by:
 
 ```shell
-conda create -n morphmaze python=3.9
-conda activate morphmaze
+conda create -n dittogym python=3.9
+conda activate dittogym
 pip install -r requirements.txt
-# install morphmaze benchmark:
-pip install git+https://github.com/suninghuang19/morphmaze.git
+# install DittoGym benchmark:
+pip install git+https://github.com/suninghuang19/dittogym.git
 ```
 
-Please check the official implementation of [Morphological Maze](https://github.com/suninghuang19/morphmaze) to learn more about the benchmark.
+Please check the official implementation of [DittoGym](https://github.com/suninghuang19/dittogym) to learn more about the benchmark.
 
 ## Run Experiments
 

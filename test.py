@@ -15,22 +15,22 @@ from torch.nn import Upsample
 torch.set_num_threads(16)
 from sac import SAC
 from replay_memory import ReplayMemory
-import morphmaze
+import dittogym
 
-parser = argparse.ArgumentParser(description='MorphMaze Project')
+parser = argparse.ArgumentParser(description='DittoGym Project')
 parser.add_argument('--env_name', default="obstacle-fine-v0",
                     help='name of the environment to run')
-parser.add_argument('--coarse_model_path', type=str, default="/home/hsn/run_test/models/obstacle/obstacle-coarse.pth", metavar='G',
+parser.add_argument('--coarse_model_path', type=str, default="", metavar='G',
                     help='path of the coarse model')
 parser.add_argument("--residual", type=bool, default=True,
                     help="if training residual policy (default: False)")
-parser.add_argument('--residual_model_path', type=str, default="/home/hsn/run_test/models/obstacle/obstacle-fine.pth", metavar='G',
+parser.add_argument('--residual_model_path', type=str, default="", metavar='G',
                     help='path of the residual model')
 parser.add_argument("--coarse_action_res", type=int, default=8,
                     help="coarse action resolution")
 parser.add_argument("--residual_action_res", type=int, default=16,
                     help="coarse action resolution")
-parser.add_argument('--config_file_path', type=str, default="/home/hsn/run_test/models/obstacle/fine.json", metavar='G',
+parser.add_argument('--config_file_path', type=str, default="", metavar='G',
                     help='path of the config file')
 parser.add_argument('--start_steps', type=int, default=0, metavar='N',
                     help='steps sampling random actions (default: 6000)')
@@ -69,7 +69,7 @@ ti.init(arch=ti.gpu, random_seed=args.seed)
 
 # GUI
 if args.visualize:
-    gui = ti.GUI("Morphological Maze", res=512, show_gui=False)
+    gui = ti.GUI("DittoGym", res=512, show_gui=False)
 
 # Wandb
 if args.wandb:
