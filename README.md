@@ -34,9 +34,8 @@ For questions about code, please create an issue on github. For questions about 
 #### You can easily install the environment by:
 
 ```shell
-conda create -n dittogym python=3.9
+conda env create -f conda_env.yaml
 conda activate dittogym
-pip install -r requirements.txt
 # install DittoGym benchmark:
 pip install git+https://github.com/suninghuang19/dittogym.git
 ```
